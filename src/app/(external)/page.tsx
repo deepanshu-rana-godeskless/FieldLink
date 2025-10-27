@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  redirect("/core/default");
+  redirect("/core/dashboard");
   // return <>Coming Soon</>;
 }
