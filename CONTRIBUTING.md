@@ -1,14 +1,16 @@
-# Contributing to Studio Admin
 
-Thanks for showing interest in improving **Studio Admin** (repo: `next-shadcn-admin-dashboard`).  
-This guide will help you set up your environment and understand how to contribute.
+# Contributing to FieldLink CRM by GoDeskless Inc.
+
+Thank you for your interest in improving **FieldLink CRM** (repo: `fieldlink-crm`).
+This guide will help you set up your environment and understand how to contribute to FieldLink CRM by GoDeskless Inc.
 
 ---
 
 ## Overview
 
-This project is built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Shadcn UI**.  
-The goal is to keep the codebase modular, scalable, and easy to extend.
+
+This project is built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Shadcn UI**.
+The goal is to keep the codebase modular, scalable, and easy to extend for FieldLink CRM by GoDeskless Inc.
 
 ---
 
@@ -122,6 +124,7 @@ If you’d like a more detailed example of this setup, check out the [Next Coloc
 
 ---
 
-Your contributions keep this project growing. 🚀
 
-**Happy Vibe Coding!**
+Your contributions keep FieldLink CRM by GoDeskless Inc. growing. 🚀
+
+**Thank you from the GoDeskless Inc. team!**

@@ -1,7 +1,9 @@
 {
-  "name": "studio-admin",
+  "name": "fieldlink-crm",
   "version": "2.0.0",
   "private": true,
+  "description": "FieldLink CRM by GoDeskless Inc. - Modern Field Service Management Platform",
+  "author": "GoDeskless Inc.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
