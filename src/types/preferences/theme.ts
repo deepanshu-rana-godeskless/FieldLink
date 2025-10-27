@@ -25,6 +25,14 @@ export const THEME_PRESET_OPTIONS = [
     },
   },
   {
+    label: "Godeskless",
+    value: "godeskless",
+    primary: {
+      light: "oklch(0.3425 0.1505 275.4294)",
+      dark: "oklch(0.72 0.16 275.43)", // punchier violet-blue accent
+    },
+  },
+  {
     label: "Brutalist",
     value: "brutalist",
     primary: {
@@ -38,6 +46,22 @@ export const THEME_PRESET_OPTIONS = [
     primary: {
       light: "oklch(0.5106 0.2301 276.9656)",
       dark: "oklch(0.6801 0.1583 276.9349)",
+    },
+  },
+  {
+    label: "Amber Minimal",
+    value: "amber-minimal",
+    primary: {
+      light: "oklch(0.7686 0.1647 70.0804)",
+      dark: "oklch(0.72 0.17 70.08)", // richer amber, bright accent on dark
+    },
+  },
+  {
+    label: "Light Green",
+    value: "light-green",
+    primary: {
+      light: "oklch(0.8348 0.1302 160.9080)",
+      dark: "oklch(0.75 0.12 155)", // balanced vivid green on dark
     },
   },
   {
