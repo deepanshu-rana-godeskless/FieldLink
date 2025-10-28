@@ -2,7 +2,7 @@
 export function getApiBaseUrl(): string {
     // TEMP: Use remote dev API for local development
     if (typeof window !== "undefined" && window.location.hostname === "localhost") {
-        return "https://circledev.godeskless.com";
+        return "https://circledev.godeskless.com/api";
     }
     // Use window.location.origin on the client
     if (typeof window !== "undefined") {

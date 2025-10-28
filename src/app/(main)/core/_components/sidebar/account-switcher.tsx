@@ -161,11 +161,11 @@ export function AccountSwitcher({
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm text-center sm:text-left leading-relaxed">
               {`Hey ${userFirstName}, are you sure you want to log out?`} <br />
-              You’ll need to log in again to access your FieldLink workspace.
+              Don’t worry — you can sign in again anytime to access your fieldlink workspace.
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <AlertDialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-6 w-full">
+          <AlertDialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-2 w-full">
             {/* Cancel Button */}
             <AlertDialogCancel className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2">
               <XCircle className="h-4 w-4 text-gray-500" />

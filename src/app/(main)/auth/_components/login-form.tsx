@@ -36,7 +36,7 @@ export function LoginForm() {
       const baseUrl = getApiBaseUrl();
       console.log("🌐 API Base URL:", baseUrl);
 
-      const res = await fetch(`${baseUrl}/api/admin/login/v2/`, {
+      const res = await fetch(`${baseUrl}/admin/login/v2/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
