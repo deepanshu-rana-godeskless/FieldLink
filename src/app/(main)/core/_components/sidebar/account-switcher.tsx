@@ -152,20 +152,27 @@ export function AccountSwitcher({
         </DropdownMenuContent>
       </DropdownMenu>
       <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
-        <AlertDialogContent className="sm:max-w-md">
+        <AlertDialogContent
+          className="w-[90vw] max-w-sm sm:max-w-md p-4 sm:p-6 rounded-lg mx-auto"
+        >
           <AlertDialogHeader>
-            <AlertDialogTitle>Logging Out?</AlertDialogTitle>
-            <AlertDialogDescription>
-              <span className="block whitespace-nowrap">{`Hey ${userFirstName}, are you sure you want to log out?`}</span>
-              <span className="block whitespace-nowrap">You will need to login again to access fieldlink workspace.</span>
+            <AlertDialogTitle className="text-base sm:text-lg text-center sm:text-left">
+              Logging Out?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm text-center sm:text-left leading-relaxed">
+              {`Hey ${userFirstName}, are you sure you want to log out?`} <br />
+              You’ll need to log in again to access your FieldLink workspace.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="sm:justify-between gap-3 mt-6">
+
+          <AlertDialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-6 w-full">
             {/* Cancel Button */}
-            <AlertDialogCancel className="flex items-center gap-2 px-4 py-2">
+            <AlertDialogCancel className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2">
               <XCircle className="h-4 w-4 text-gray-500" />
               Cancel
             </AlertDialogCancel>
+
+            {/* Log out Button */}
             <Button
               variant="outline"
               onClick={async () => {
@@ -173,7 +180,7 @@ export function AccountSwitcher({
                 await handleLogout(router);
               }}
               className={cn(
-                "flex items-center gap-2 border-red-600 text-red-600",
+                "flex items-center justify-center gap-2 w-full sm:w-auto border-red-600 text-red-600",
                 "hover:bg-red-50 hover:text-red-700 hover:border-red-700",
                 "focus-visible:ring-red-500 focus-visible:ring-offset-2"
               )}

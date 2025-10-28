@@ -146,6 +146,7 @@ export function NavMain({ items }: NavMainProps) {
   const { state, isMobile } = useSidebar();
 
   const isItemActive = (url: string, subItems?: NavMainItem["subItems"]) => {
+    if (!path) return false;
     if (subItems?.length) {
       return subItems.some((sub) => path.startsWith(sub.url));
     }
@@ -153,6 +154,7 @@ export function NavMain({ items }: NavMainProps) {
   };
 
   const isSubmenuOpen = (subItems?: NavMainItem["subItems"]) => {
+    if (!path) return false;
     return subItems?.some((sub) => path.startsWith(sub.url)) ?? false;
   };
 
