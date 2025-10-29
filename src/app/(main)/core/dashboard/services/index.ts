@@ -70,4 +70,15 @@ export const defaultDashboardServices = {
       body: { search_text: searchText },
     });
   },
+
+  // 9. Get Utilization Details (POST, paginated, category, with search)
+  getUtilizationDetails: (token: string, page: number, category: string) => {
+    // Always send only { category } as payload
+    return fetchApi({
+      endpoint: `/service/utilization/?page=${page}`,
+      token,
+      method: 'POST',
+      body: { category },
+    });
+  },
 };

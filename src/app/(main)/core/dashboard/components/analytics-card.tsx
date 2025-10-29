@@ -50,6 +50,8 @@ export function AnalyticsCard({
     ],
     singleValue = false,
     onValueClick,
+    tab: controlledTab,
+    setTab: setControlledTab,
 }: {
     label: string;
     fields: AnalyticsCardFields;
@@ -57,14 +59,23 @@ export function AnalyticsCard({
     loading: boolean;
     tabs?: AnalyticsCardTab[];
     singleValue?: boolean;
-    onValueClick?: (() => void) | undefined;
+    onValueClick?: ((tabKey: string) => void) | undefined;
+    tab?: string;
+    setTab?: (tab: string) => void;
 }) {
-    const [tab, setTab] = useState<string>(tabs[0].key);
+    const isControlled = controlledTab !== undefined && setControlledTab !== undefined;
+    const [internalTab, setInternalTab] = useState<string>(tabs[0].key);
+    const tab = isControlled ? controlledTab! : internalTab;
+    const setTab = isControlled ? setControlledTab! : setInternalTab;
 
     const getTabValues = () => {
         if (!analytics) return { main: 0, today: 0, mtd: 0 };
         const mapping = fields[tab];
         if (!mapping) return { main: 0, today: 0, mtd: 0 };
+        // Special logic for Utilization: read from analytics.total
+        if (label === "Utilization" && mapping.main && analytics.total && analytics.total[mapping.main] !== undefined) {
+            return { main: analytics.total[mapping.main] };
+        }
         // For singleValue, search all root keys for the value
         if (singleValue) {
             // Try till_date, todays, mtd, or root
@@ -121,7 +132,7 @@ export function AnalyticsCard({
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <span>
-                                    <AnimatedValue value={main} loading={loading} keyPrefix={tab + "-main-" + label} className="text-4xl md:text-4xl font-extrabold tracking-tight mt-3" onClick={onValueClick} />
+                                    <AnimatedValue value={main} loading={loading} keyPrefix={tab + "-main-" + label} className="text-4xl md:text-4xl font-extrabold tracking-tight mt-3" onClick={onValueClick ? () => onValueClick(tab) : undefined} />
                                 </span>
                             </TooltipTrigger>
                             <TooltipContent side="bottom">Click the count to view logged in Field Agents Today</TooltipContent>
@@ -144,8 +155,21 @@ export function AnalyticsCard({
                             </TooltipTrigger>
                             <TooltipContent side="bottom">Users registered till date</TooltipContent>
                         </Tooltip>
+                    ) : label === "Utilization" && (tab === "video" || tab === "sms" || tab === "whatsapp") ? (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <span>
+                                    <AnimatedValue value={main} loading={loading} keyPrefix={tab + "-main-" + label} className="text-4xl md:text-4xl font-extrabold tracking-tight mt-3" onClick={onValueClick ? () => onValueClick(tab) : undefined} />
+                                </span>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom">
+                                {tab === "video" && "Total videos utilization till date"}
+                                {tab === "sms" && "Total SMS sent till date"}
+                                {tab === "whatsapp" && "Total WhatsApp messages sent till date"}
+                            </TooltipContent>
+                        </Tooltip>
                     ) : (
-                        <AnimatedValue value={main} loading={loading} keyPrefix={tab + "-main-" + label} className="text-4xl md:text-4xl font-extrabold tracking-tight mt-3" onClick={tab === 'loggedin' ? onValueClick : undefined} />
+                        <AnimatedValue value={main} loading={loading} keyPrefix={tab + "-main-" + label} className="text-4xl md:text-4xl font-extrabold tracking-tight mt-3" onClick={onValueClick ? () => onValueClick(tab) : undefined} />
                     )}
                 </CardFooter>
             ) : (

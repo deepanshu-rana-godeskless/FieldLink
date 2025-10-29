@@ -15,6 +15,7 @@ import { defaultDashboardServices } from "../services";
 import { authUtils } from "@/lib/auth-utils";
 import { AnalyticsCard, AnalyticsCardFields } from "./analytics-card";
 import { LoggedInUsersDrawer } from "./LoggedInUsersDrawer";
+import { UtilizationDrawer } from "./UtilizationDrawer";
 
 // -------------------------------
 // Types
@@ -33,6 +34,8 @@ export function SectionCards() {
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [showLoggedInDrawer, setShowLoggedInDrawer] = useState(false);
+  // Track the current Utilization tab
+  const [utilizationTab, setUtilizationTab] = useState<"video" | "sms" | "whatsapp">("video");
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -116,6 +119,20 @@ export function SectionCards() {
     { key: "total", label: "Total" },
   ];
 
+  // Utilization fields and tabs
+  const utilizationFields = {
+    video: { main: "total_video" },
+    sms: { main: "total_sms" },
+    whatsapp: { main: "total_whatsapp" },
+  };
+  const utilizationTabs = [
+    { key: "video", label: "Video" },
+    { key: "sms", label: "SMS" },
+    { key: "whatsapp", label: "WhatsApp" },
+  ];
+
+  const [utilizationDrawer, setUtilizationDrawer] = useState<{ open: boolean; category: "video" | "sms" | "whatsapp" }>({ open: false, category: "video" });
+
   // -------------------------------
   // Render
   // -------------------------------
@@ -149,33 +166,30 @@ export function SectionCards() {
           onValueClick={() => setShowLoggedInDrawer(true)}
         />
 
-        {/* Growth Rate Card */}
-        <Card className="@container/card">
-          <CardHeader>
-            <CardDescription>Growth Rate</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              4.5%
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline">
-                <TrendingUp />
-                +4.5%
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="line-clamp-1 flex gap-2 font-medium">
-              Steady performance increase <TrendingUp className="size-4" />
-            </div>
-            <div className="text-muted-foreground">Meets growth projections</div>
-          </CardFooter>
-        </Card>
+        {/* Utilization Card */}
+        <AnalyticsCard
+          label="Utilization"
+          fields={utilizationFields}
+          analytics={analytics}
+          loading={loading}
+          tabs={utilizationTabs}
+          singleValue
+          tab={utilizationTab}
+          setTab={(tab) => setUtilizationTab(tab as "video" | "sms" | "whatsapp")}
+          onValueClick={(tabKey) => setUtilizationDrawer({ open: true, category: tabKey as "video" | "sms" | "whatsapp" })}
+        />
       </div>
 
       {/* Drawer for logged in users */}
       <LoggedInUsersDrawer
         open={showLoggedInDrawer}
         onClose={() => setShowLoggedInDrawer(false)}
+      />
+      {/* Drawer for utilization details */}
+      <UtilizationDrawer
+        open={utilizationDrawer.open}
+        onClose={() => setUtilizationDrawer({ ...utilizationDrawer, open: false })}
+        category={utilizationDrawer.category}
       />
     </>
   );
