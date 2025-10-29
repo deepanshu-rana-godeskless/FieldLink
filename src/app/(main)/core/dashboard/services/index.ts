@@ -60,4 +60,14 @@ export const defaultDashboardServices = {
   // 7. Get Language List
   getLanguageList: (token: string) =>
     fetchApi({ endpoint: '/language_list/', token }),
+
+  // 8. Get Logged In Users (POST, paginated, with search)
+  getLoggedInUsers: (token: string, page: number, searchText: string) => {
+    return fetchApi({
+      endpoint: `/admin/login/users/?page=${page}`,
+      token,
+      method: 'POST',
+      body: { search_text: searchText },
+    });
+  },
 };

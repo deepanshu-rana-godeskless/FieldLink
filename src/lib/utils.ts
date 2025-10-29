@@ -40,3 +40,29 @@ export function formatCurrency(
 
   return new Intl.NumberFormat(locale, formatOptions).format(amount);
 }
+
+/**
+ * Converts an ISO date string to IST and returns a formatted string.
+ * @param dateString ISO date string
+ * @param options Intl.DateTimeFormatOptions (optional)
+ * @returns string formatted in IST
+ */
+export function formatToIST(dateString: string, options?: Intl.DateTimeFormatOptions): string {
+  if (!dateString) return "-";
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+      ...options,
+    });
+  } catch {
+    return dateString;
+  }
+}
