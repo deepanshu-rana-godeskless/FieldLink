@@ -36,6 +36,8 @@ export function SectionCards() {
   const [showLoggedInDrawer, setShowLoggedInDrawer] = useState(false);
   // Track the current Utilization tab
   const [utilizationTab, setUtilizationTab] = useState<"video" | "sms" | "whatsapp">("video");
+  const [utilizationDrawer, setUtilizationDrawer] = useState<{ open: boolean; category: "video" | "sms" | "whatsapp" }>({ open: false, category: "video" });
+
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -130,8 +132,6 @@ export function SectionCards() {
     { key: "sms", label: "SMS" },
     { key: "whatsapp", label: "WhatsApp" },
   ];
-
-  const [utilizationDrawer, setUtilizationDrawer] = useState<{ open: boolean; category: "video" | "sms" | "whatsapp" }>({ open: false, category: "video" });
 
   // -------------------------------
   // Render

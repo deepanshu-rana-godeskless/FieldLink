@@ -65,17 +65,12 @@ Your app will be running at [http://localhost:3000](http://localhost:3000)
 
 You can run this project locally, or deploy it instantly with Vercel.
 
-### Deploy with Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Farhamkhnz%2Fnext-shadcn-admin-dashboard)
-
-_Deploy your own copy with one click._
 
 ### Run locally
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/arhamkhnz/next-shadcn-admin-dashboard.git
+   git clone https://github.com/goDeskless/NextJS-GD-CRM.git
    ```
    
 2. **Navigate into the project**
@@ -104,6 +99,4 @@ Your app will be running at [http://localhost:3000](http://localhost:3000)
 
 Contributions are welcome. Feel free to open issues, feature requests, or start a discussion.
 
-
-**Happy Vibe Coding!**
 # FieldLink
