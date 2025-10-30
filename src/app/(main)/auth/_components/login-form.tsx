@@ -4,11 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { getApiBaseUrl } from "@/lib/api-utils";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -17,6 +19,7 @@ const FormSchema = z.object({
 });
 
 export function LoginForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -27,13 +30,56 @@ export function LoginForm() {
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    toast("You submitted the following values", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    console.log("🔐 Starting login process...");
+    try {
+      // Call login API using dynamic base URL
+      const baseUrl = getApiBaseUrl();
+      console.log("🌐 API Base URL:", baseUrl);
+
+      const res = await fetch(`${baseUrl}/admin/login/v2/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: data.email,
+          password: data.password,
+          source: "ACCOUNTADMIN_APP"
+        }),
+      });
+
+      console.log("📡 Response status:", res.status);
+      const response = await res.json();
+      console.log("📦 Login response:", response);
+
+      if (response.status && response.data?.[0]?.access_token) {
+        console.log("✅ Login successful, storing token and user data");
+
+        // Store token and user info in localStorage (like AngularJS $sessionStorage)
+        localStorage.setItem("token", response.data[0].access_token);
+        localStorage.setItem("user", JSON.stringify(response.data[0].personal_info));
+
+        console.log("💾 Data stored in localStorage");
+        console.log("🚀 Redirecting to dashboard...");
+
+        toast.success(`Welcome, ${response.data[0].personal_info.full_name || data.email}!`, {
+          description: "You have successfully logged in. Redirecting to your dashboard...",
+        });
+
+        console.log("🔄 Executing router.push...");
+        // Use router.push for optimal Next.js navigation
+        router.push("/core/dashboard");
+
+      } else {
+        // Show API error message if available, otherwise default
+        let errorMsg = "Invalid credentials or server error.";
+        if (res.status === 200 && response.error?.msg) {
+          errorMsg = response.error.msg;
+        }
+        toast.error("Login failed", { description: errorMsg });
+      }
+    } catch (err) {
+      console.error("💥 Login error:", err);
+      toast.error("Login failed", { description: err instanceof Error ? err.message : "Unknown error" });
+    }
   };
 
   return (

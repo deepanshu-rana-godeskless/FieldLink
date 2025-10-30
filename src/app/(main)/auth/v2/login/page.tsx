@@ -1,9 +1,6 @@
 import Link from "next/link";
-
 import { Globe } from "lucide-react";
-
 import { APP_CONFIG } from "@/config/app-config";
-
 import { LoginForm } from "../../_components/login-form";
 import { GoogleButton } from "../../_components/social-auth/google-button";
 
