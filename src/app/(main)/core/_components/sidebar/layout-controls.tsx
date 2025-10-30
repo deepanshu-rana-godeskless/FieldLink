@@ -9,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { updateContentLayout, updateNavbarStyle } from "@/lib/layout-utils";
 import { updateThemeMode, updateThemePreset } from "@/lib/theme-utils";
-import { setValueToCookie } from "@/server/server-actions";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 import type { SidebarVariant, SidebarCollapsible, ContentLayout, NavbarStyle } from "@/types/preferences/layout";
 import { THEME_PRESET_OPTIONS, type ThemePreset, type ThemeMode } from "@/types/preferences/theme";
@@ -28,6 +27,10 @@ export function LayoutControls(props: LayoutControlsProps) {
   const setThemeMode = usePreferencesStore((s) => s.setThemeMode);
   const themePreset = usePreferencesStore((s) => s.themePreset);
   const setThemePreset = usePreferencesStore((s) => s.setThemePreset);
+  const setContentLayout = usePreferencesStore((s) => s.setContentLayout);
+  const setVariant = usePreferencesStore((s) => s.setVariant);
+  const setCollapsible = usePreferencesStore((s) => s.setCollapsible);
+  const setNavbarStyle = usePreferencesStore((s) => s.setNavbarStyle);
 
   const handleValueChange = async (key: string, value: any) => {
     if (key === "theme_mode") {
@@ -42,12 +45,21 @@ export function LayoutControls(props: LayoutControlsProps) {
 
     if (key === "content_layout") {
       updateContentLayout(value);
+      setContentLayout(value);
     }
 
     if (key === "navbar_style") {
       updateNavbarStyle(value);
+      setNavbarStyle(value);
     }
-    await setValueToCookie(key, value);
+
+    if (key === "sidebar_variant") {
+      setVariant(value);
+    }
+
+    if (key === "sidebar_collapsible") {
+      setCollapsible(value);
+    }
   };
 
   return (
